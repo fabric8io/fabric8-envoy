@@ -1,0 +1,5 @@
+.git
+.vagrant
+README.adoc
+Vagrantfile
+scripts

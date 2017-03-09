@@ -1,0 +1,41 @@
+= Envoy
+
+The docker image for https://github.com/lyft/envoy[envoy] based on centos7.
+
+WARNING: This project is under active development, so steps tend to change
+
+[[build-envoy-binary]]
+== Building Envoy Binary
+
+The envoy binary is built using the accompanying Vagrantfile and the scripts available as part of the scripts directory. The Vagrant up command will provision a Centos7 machine with required tools and libraries to build envoy. The envoy build setup has been divided into two steps for convinence,
+
+* `setup_tools.sh` - this script takes care of downloading and building the pre-requisite libraries that are required by `envoy` build
+* `build_envoy.sh` - this script takes care of build envoy binary and after successful build it copies the binary to the `bin` directory from where Vagrant is run
+
+So the typical steps to build the envoy binary will be as follows,
+
+1. `vagrant up` - bring up the Vagrant box to build the binary, might take some time if you don't have 'centos/7' box locally
+2. `vagrant ssh EnvoyBuilder`- get in to Envoy builder box
+[[envoy-pre-req]]
+3. `sh /vagrant/scripts/setup_tools.sh` - run the script to download and install pre-requsites for envoy,
+
+NOTE: The above step might take a bit of time in building `gcc-4.9.4`
+
+4. `sh /vagrant/scripts/build_envoy.sh` - this builds the actual `envoy` binary and copies the same to *bin* folder of the directory from where vagrant command is run
+
+
+NOTE: In future the <<envoy-pre-req,Install pre-requisites>> step (*setup_tools.sh*) might not be requried to be run, as centos7 based Vagrant box will be available at https://atlas.hashicorp.com/vagrant[Atlas]. You can then just run build_envoy.sh without worrying on what dependencies that needs to be installed for building https://github.com/lyft/envoy[envoy]
+
+[[build-docker-image]]
+== Building Docker Image
+
+The docker image for the binary built using the steps <<build-envoy-binary>>, can be done by running the command `docker build -t <your-tag> --rm .`  The command builds the required docker image, the docker image exposes a volume called `/etc/envoy` where the envoy configuration files could be placed.
+
+=== Run examples
+
+To run the envoy container with a confiuration file of your choice, run the following command
+
+`docker run -d -v $CONFIG_FOLDER:/etc/envoy my/envoy envoy -c /etc/envoy/myconfig.json`
+
+NOTE: more examples coming...
+
