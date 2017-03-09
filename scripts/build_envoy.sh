@@ -22,10 +22,9 @@ export LD_LIBRARY_PATH=$PWD/gcc-4.9.4/lib64:$LD_LIBRARY_PATH
 
 if [ -d "$PWD/envoy" ]; then 
   rm -rf "$PWD/envoy"
-  git clone https://github.com/lyft/envoy.git
-  cd envoy && git fetch && git checkout $ENVOY_VERSION
 fi
-
+git clone https://github.com/lyft/envoy.git
+cd envoy && git fetch && git checkout $ENVOY_VERSION
 mkdir build && cd build
 
 cmake \
