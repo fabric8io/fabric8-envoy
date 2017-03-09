@@ -16,6 +16,10 @@ cd $ENVOY_DIR
 THIRDPARTY_DIR=$PWD/thirdparty
 THIRDPARTY_BUILD=$PWD/thirdparty_build
 
+export PATH=$PWD/gcc-4.9.4/bin:$PATH
+export CC=`which gcc`
+export CXX=`which g++`
+
 export LD_LIBRARY_PATH=$PWD/gcc-4.9.4/lib64:$LD_LIBRARY_PATH
 
 # download envoy sources ( do clean download )
