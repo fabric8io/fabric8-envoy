@@ -7,6 +7,7 @@ yum install -y cmake gmp-devel mpfr-devel libmpc-devel golang clang c-ares-devel
 # we need latest version of the git for the build hence will remove the existing version
 yum -y remove  git 
 
+rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 rpm -ivh https://centos7.iuscommunity.org/ius-release.rpm
 yum -y update 
 # disable base repo for installation as it has older git version
